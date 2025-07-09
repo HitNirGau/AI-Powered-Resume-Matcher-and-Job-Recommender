@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <style>
+        :root {
+            --primary-color: #6a1b9a;
+            --hover-color: #4a148c;
+            --pink-accent: #ff85a2;
+            --pink-hover: #ff6789;
+            --secondary-color: #9c4dcc;
+            --sidebar-bg: linear-gradient(160deg, #f8f2fc 0%, #ffe6f0 100%);
+            --content-bg: #fef9fb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: var(--content-bg);
+            min-height: 100vh;
+        }
+
+        .dashboard {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: var(--sidebar-bg);
+            padding: 2rem 1.5rem;
+            border-right: 1px solid #f0d4e6;
+        }
+
+        .sidebar h3 {
+            color: var(--primary-color);
+            margin-bottom: 2.5rem;
+            font-weight: 700;
+            padding-left: 0.5rem;
+            font-size: 1.7rem;
+            letter-spacing: -0.5px;
+            text-shadow: 2px 2px 4px rgba(255, 134, 162, 0.1);
+        }
+
+        .content {
+            flex: 1;
+            position: relative;
+            padding: 3rem;
+            background: var(--content-bg);
+            overflow-y: auto;
+        }
+
+        .top-bar {
+            position: absolute;
+            top: 2rem;
+            right: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .profile-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary-color), var(--pink-accent));
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 134, 162, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .notification-icon {
+            font-size: 1.6rem;
+            color: var(--secondary-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0.5rem;
+            border-radius: 50%;
+            background: rgba(255, 134, 162, 0.1);
+        }
+
+        .notification-icon:hover {
+            color: var(--pink-hover);
+            background: rgba(255, 134, 162, 0.2);
+        }
+
+        .nav-link {
+            color: var(--secondary-color);
+            padding: 1rem 1.25rem;
+            margin: 0.5rem 0;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.2s ease;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .nav-link:hover {
+            background: linear-gradient(45deg, rgba(106, 27, 154, 0.05), rgba(255, 134, 162, 0.05));
+            color: var(--pink-hover);
+            border-left: 4px solid var(--pink-accent);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(45deg, var(--primary-color), var(--pink-accent));
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 134, 162, 0.2);
+        }
+
+        .nav-link i {
+            width: 28px;
+            font-size: 1.2rem;
+            color: inherit;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover i {
+            transform: scale(1.1);
+        }
+
+        h1 {
+            margin-top: 4rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 2.8rem;
+            position: relative;
+            letter-spacing: -1px;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--pink-accent));
+            border-radius: 2px;
+        }
+
+        .content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 280px;
+            background: linear-gradient(45deg,
+                rgba(255, 134, 162, 0.03) 0%,
+                rgba(106, 27, 154, 0.01) 100%);
+            z-index: -1;
+            border-radius: 0 0 40px 40px;
+        }
+
+        .job-recommendations {
+            margin-top: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(106, 27, 154, 0.05);
+            padding: 1.5rem;
+        }
+
+        .job-card {
+            border-bottom: 1px solid #f0f0f0;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .job-card:hover {
+            background: rgba(255, 134, 162, 0.02);
+        }
+
+        .job-card:last-child {
+            border-bottom: none;
+        }
+
+        .job-card h5 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
+        }
+
+        .job-card p {
+            color: #666;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .job-card .description {
+            color: #555;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .upload-resume {
+            margin-top: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(106, 27, 154, 0.05);
+            padding: 2rem;
+        }
+
+        .custom-file-upload {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            background: linear-gradient(45deg, var(--primary-color), var(--pink-accent));
+            color: white;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .custom-file-upload:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(106, 27, 154, 0.2);
+        }
+
+        .alert {
+            margin-top: 2rem;
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+        }
+
+        .alert-warning {
+            background-color: #fff3cd;
+            border-color: #ffecb5;
+            color: #664d03;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            border-color: #f5c2c7;
+            color: #842029;
+        }
+    </style>
+</head>
+<body>
+
+  {% include 'messages.html' with context%}
+
+    <div class="dashboard">
+        <div class="sidebar">
+            <h3>Dashboard</h3>
+            <nav class="nav flex-column">
+                <a class="nav-link active" href="{{ url_for('routes.dashboard') }}">
+                    <i class="bi bi-house-door"></i>
+                    Home
+                </a>
+                <a class="nav-link" href="{{ url_for('routes.profile', user_id=user.id) }}">
+                    <i class="bi bi-person"></i>
+                    Profile
+                </a>
+                <a class="nav-link" href="{{url_for('routes.all_jobs', user_id=user.id)}}">
+                    <i class="fas fa-search"></i>
+                    Search
+                </a>
+                <a class="nav-link" href="{{ url_for('routes.logout') }}">
+                    <i class="bi bi-box-arrow-right"></i>
+                    Logout
+                </a>
+            </nav>
+        </div>
+        <div class="content">
+            <div class="top-bar">
+                <i class="bi bi-bell notification-icon"></i>
+                <div class="profile-icon">{{ user.full_name[0]|upper }}</div>
+            </div>
+            <h1>Welcome Back, {{ user.full_name }}</h1>
+
+
+            {% if not user.resume %}
+            <div class="upload-resume">
+                <h4 class="mb-4">Upload Your Resume</h4>
+                <form action="{{ url_for('routes.upload_resume') }}" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="resume" class="custom-file-upload">
+                            <i class="bi bi-upload"></i> Choose File
+                        </label>
+                        <input type="file" id="resume" name="resume" class="d-none" accept=".pdf,.docx,.txt,.png,.jpg,.jpeg">
+                    </div>
+                    <button type="submit" class="btn" style="background: var(--primary-color); color: white;">
+                        Upload Resume
+                    </button>
+                </form>
+            </div>
+            {% endif %}
+
+            {% if recommendations %}
+            <div class="job-recommendations">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">
+                    <i class="bi bi-briefcase me-2"></i>Job Recommendations
+                </h3>
+                {% for job in recommendations %}
+                <div class="job-card">
+                    <h5>{{ job.job_title }}</h5>
+                    <p><strong><i class="bi bi-building me-2"></i>Company:</strong> {{ job.company }}</p>
+                    <p><strong><i class="bi bi-geo-alt me-2"></i>Location:</strong> {{ job.location }}</p>
+                    {% if job.description %}
+                    <div class="description">
+                        {{ job.description[:300] }}{% if job.description|length > 300 %}...{% endif %}
+                    </div>
+                    {% endif %}
+                    <div class="mt-3">
+                        {% if job.apply_link %}
+                        <a href="{{ job.apply_link }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-eye me-1"></i> View Details
+                        </a>
+                        <a href="{{ job.apply_link }}" target="_blank" class="btn btn-outline-success btn-sm ms-2">
+                            <i class="bi bi-send me-1"></i> Apply Now
+                        </a>
+                        {% else %}
+                        <button class="btn btn-secondary btn-sm" disabled>
+                            No Link Available
+                        </button>
+                        {% endif %}
+                    </div>
+
+                </div>
+                {% endfor %}
+            </div>
+            {% elif user.resume is none %}
+            <div class="alert alert-warning">
+                <i class="bi bi-exclamation-triangle me-2"></i>
+                No resume uploaded. Please upload your resume to get job recommendations.
+            </div>
+            {% elif parse_error %}
+            <div class="alert alert-danger">
+                <i class="bi bi-x-circle me-2"></i>
+                Unable to parse your resume. Please try uploading it again.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

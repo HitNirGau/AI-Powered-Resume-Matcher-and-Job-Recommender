@@ -1,0 +1,26 @@
+body{
+    background-color: azure;
+}
+.box-area{
+    width:930px;
+    height:450px;
+}
+.for-pass{
+    text-decoration: none;
+}
+.for-pass:hover{
+    text-decoration:underline;
+    text-decoration-color: black;
+    color:darkorchid;
+}
+.login-bt{
+    font-weight:600;
+}
+.login-bt:hover{
+    font-weight:600;
+    background-color: darkorchid;
+    border-color:azure
+}
+.signup:hover{
+    color: darkorchid;
+}

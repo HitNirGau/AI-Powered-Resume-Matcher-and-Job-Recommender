@@ -1,0 +1,29 @@
+body{
+    margin:0;
+    padding:0;
+    background-color: azure;
+}
+.main-container{
+    width:400px;
+    height:80%;
+    background-color: black;
+}
+.submit{
+    font-weight: 600;
+}
+
+.submit:hover{
+    background-color:blueviolet;
+    border-color:aliceblue;
+}
+
+.center-div{
+    background-color: #cdb4db;
+}
+.login{
+    text-decoration: none;
+}
+.login:hover{
+    text-decoration-line: underline;
+    color:white;
+}

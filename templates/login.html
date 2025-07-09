@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/bootstrap.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <style>
+      :root {
+        --primary-color: #6a1b9a;
+        --hover-color: #4a148c;
+      }
+
+      body {
+        background: linear-gradient(135deg, #cdb4db 0%, #ffafcc 100%);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .login-container {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+      }
+
+      .login-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        padding: 2.5rem;
+        width: 100%;
+        max-width: 400px;
+        transition: transform 0.3s ease;
+      }
+
+      .login-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .form-control {
+        border-radius: 10px;
+        padding: 1rem;
+        border: 2px solid #eee;
+        transition: all 0.3s ease;
+      }
+
+      .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(106, 27, 154, 0.25);
+      }
+
+      .btn-primary {
+        background-color: var(--primary-color);
+        border: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 10px;
+        width: 100%;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary:hover {
+        background-color: var(--hover-color);
+        transform: translateY(-2px);
+      }
+
+      .signup-link {
+        text-align: center;
+        margin-top: 1.5rem;
+        color: #666;
+      }
+
+      .signup-link a {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+      }
+
+      .signup-link a:hover {
+        color: var(--hover-color);
+      }
+
+      .input-icon {
+        position: relative;
+      }
+
+      .input-icon i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999;
+      }
+
+      .input-icon input {
+        padding-left: 40px;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    {% include 'messages.html' with context%}
+    <div class="login-container">
+      <div class="login-card">
+        <h2 class="text-center mb-4">Welcome Back!</h2>
+        <p class="text-center text-muted mb-4">Please sign in to continue</p>
+
+
+
+
+        <form action="{{ url_for('routes.login') }}" method="POST">
+          <div class="mb-3 input-icon">
+            <i class="fas fa-envelope"></i>
+            <input
+              type="email"
+              name="email"
+              class="form-control form-control-lg"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+
+          <div class="mb-4 input-icon">
+            <i class="fas fa-lock"></i>
+            <input
+              type="password"
+              name="password"
+              class="form-control form-control-lg"
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+
+          <button type="submit" class="btn btn-primary mb-3">Login</button>
+
+          <div class="signup-link">
+            <p class="mb-0">
+              Don't have an account?
+              <a href="{{ url_for('routes.register') }}">Create Account</a>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

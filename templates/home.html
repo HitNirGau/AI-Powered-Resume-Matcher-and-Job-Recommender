@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Search</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #ffafcc;
+            background-image: linear-gradient(135deg, #ffd6ff 0%, #ea638c 100%);
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            font-size: 16px;
+        }
+        .navs a {
+            margin-left: 12px;
+            margin-right: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .job-card {
+            border: none;
+            border-radius: 16px;
+            padding: 24px;
+            margin: 15px 0;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+        .job-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+        .job-card h5 {
+            color: #9d4edd;
+            margin: 10px 0;
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+        .job-card a {
+            background: #9d4edd;
+            color: white;
+            padding: 10px 22px;
+            border-radius: 10px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 15px;
+            align-self: flex-start;
+            transition: all 0.3s ease;
+            border: none;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .job-card a:hover {
+            background: #7b2cbf;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(123, 44, 191, 0.3);
+        }
+        .job-details {
+            flex-grow: 1;
+        }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 30px;
+            height: 100%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+        .feature-card h5 {
+            color: #9d4edd;
+            margin-bottom: 15px;
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+        .search-container {
+<!--            background: #c77dff;-->
+            border-radius: 20px;
+            padding: 35px;
+<!--            box-shadow: 0 12px 25px rgba(0,0,0,0.15);-->
+            border: none;
+        }
+        .popular-searches {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 10px 22px rgba(0,0,0,0.12);
+            border: none;
+            font-size: 18px;
+        }
+        .popular-searches .btn {
+            font-size: 16px;
+            padding: 8px 18px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .popular-searches .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+        }
+        .why-us {
+            background: linear-gradient(135deg, #9d4edd 0%, #c77dff 100%);
+            border-radius: 20px;
+            padding: 40px;
+            color: white;
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+            border: none;
+            font-size: 18px;
+        }
+        .btn-outline-light {
+            border-color: white;
+            color: white;
+            transition: all 0.3s ease;
+            border-radius: 10px;
+            padding: 10px 18px;
+            font-weight: 500;
+        }
+        .btn-outline-light:hover {
+            background: white;
+            color: #9d4edd;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+        }
+        .btn-outline-dark {
+            transition: all 0.3s ease;
+            border-radius: 10px;
+            font-weight: 500;
+        }
+        .btn-outline-dark:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+        }
+        .navbar {
+            padding: 8px 0;
+            backdrop-filter: blur(10px);
+        }
+        .page-container {
+            width: 90%;
+            margin: 0 auto;
+        }
+        .nav-link {
+            color: #7b2cbf !important;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #9d4edd !important;
+            transform: translateY(-2px);
+        }
+        .navbar-brand {
+            color: #7b2cbf !important;
+            font-weight: 800;
+            font-size: 1.8rem;
+            letter-spacing: 0.5px;
+        }
+        h1, h2, h4 {
+            color: #7b2cbf;
+            font-weight: 800;
+        }
+        h1 {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            font-size: 2.8rem;
+        }
+        h2 {
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+        }
+        h4 {
+            font-size: 1.5rem;
+        }
+        .btn-primary {
+            background: #9d4edd;
+            border-color: #9d4edd;
+            border-radius: 10px;
+            font-weight: 600;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            padding: 10px 22px;
+        }
+        .btn-primary:hover {
+            background: #7b2cbf;
+            border-color: #7b2cbf;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+        .form-control, .form-select {
+            border-radius: 10px;
+            padding: 12px 18px;
+            border: 1px solid #e2d9ff;
+            font-size: 16px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+            transition: all 0.3s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #9d4edd;
+            box-shadow: 0 0 0 0.25rem rgba(157, 78, 221, 0.25);
+            transform: translateY(-2px);
+        }
+        .form-label {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #9d4edd;
+            margin-bottom: 20px;
+            text-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+        }
+        /* Modified styles to center features with consistent alignment */
+        .advantage-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .advantage-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 18px;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        .advantage-item:hover {
+            transform: translateX(5px);
+        }
+        .check-icon {
+            background-color: white;
+            color: #9d4edd;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+            flex-shrink: 0;
+        }
+        .lead {
+            font-size: 1.3rem;
+            font-weight: 300;
+            letter-spacing: 0.3px;
+        }
+        footer {
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px 0;
+            border-top: 1px solid rgba(255,255,255,0.3);
+        }
+        footer p {
+            font-weight: 500;
+        }
+        .text-white {
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .job-card, .feature-card, .search-container, .popular-searches, .why-us {
+                padding: 25px;
+            }
+            h1 {
+                font-size: 2.2rem;
+            }
+            h2 {
+                font-size: 1.7rem;
+            }
+            .row-cols-md-2 > * {
+                flex: 0 0 auto;
+                width: 100%;
+            }
+            .navbar {
+                padding: 12px 0;
+            }
+            .advantage-list {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg">
+    <div class="page-container d-flex justify-content-between align-items-center">
+        <a class="navbar-brand fw-bold" href="#">JobSeeker</a>
+        <div>
+            {% if user %}
+                <a class="nav-link active mx-2 d-inline-block" href="#">Dashboard</a>
+                <a class="nav-link active mx-2 d-inline-block" href="{{ url_for('routes.logout') }}">Logout</a>
+            {% else %}
+                <div class="navs">
+                    <a href="{{ url_for('routes.login') }}" class="btn btn-outline-dark">Login</a>
+                    <a href="{{ url_for('routes.register') }}" class="btn btn-outline-dark">Sign Up</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+<main class="page-container my-5">
+    <div class="text-center mb-5">
+        <h1 class="text-white mb-4">Find Your Dream Job Today!</h1>
+        <p class="lead text-white mb-4">Discover thousands of job opportunities with top employers</p>
+
+        <form action="{{ url_for('routes.search_jobs') }}" method="GET" class="search-container">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <input type="text" name="query" class="form-control" placeholder="Job title or keywords"
+                           value="{{ query if query else '' }}">
+                </div>
+
+                <div class="col-md-3">
+                    <input type="text" name="area" class="form-control" placeholder="Location"
+                           value="{{ area if area else '' }}">
+                </div>
+
+                <div class="col-md-3">
+                    <select name="category" class="form-select">
+                        <option value="">All Categories</option>
+                        {% for cat in ['FULLTIME', 'PARTTIME', 'CONTRACTOR', 'INTERN'] %}
+                            <option value="{{ cat.lower() }}" {% if cat.lower() == category|lower %} selected {% endif %}>
+                                {{ cat.replace("_", " ") }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100 py-2">
+                        <i class="bi bi-search me-2"></i>Search
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Popular Searches -->
+    <div class="mb-5">
+        <div class="popular-searches">
+            <h4 class="text-center mb-4">Popular Searches</h4>
+            <div class="d-flex flex-wrap justify-content-center gap-3 mt-3">
+                <a href="{{ url_for('routes.search_jobs', query='developer', area='Bangalore') }}" class="btn btn-outline-dark btn-sm">Developer in Bangalore</a>
+                <a href="{{ url_for('routes.search_jobs', query='designer', area='Pune') }}" class="btn btn-outline-dark btn-sm">Designer in Pune</a>
+                <a href="{{ url_for('routes.search_jobs', query='data analyst', area='Hyderabad') }}" class="btn btn-outline-dark btn-sm">Data Analyst in Hyderabad</a>
+                <a href="{{ url_for('routes.search_jobs', query='marketing', area='Delhi') }}" class="btn btn-outline-dark btn-sm">Marketing in Delhi</a>
+                <a href="{{ url_for('routes.search_jobs', query='engineer', area='Mumbai') }}" class="btn btn-outline-dark btn-sm">Engineer in Mumbai</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Why Use Us Section -->
+    <div class="why-us mb-5">
+        <h2 class="text-center text-white mb-4">Why Use Our Platform?</h2>
+        <p class="lead text-center text-white mb-4">Search jobs faster, smarter, and with real-time listings from trusted companies.</p>
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="advantage-list">
+                    <div class="advantage-item">
+                        <span class="check-icon">✓</span>
+                        <span>Curated job listings from top companies</span>
+                    </div>
+                    <div class="advantage-item">
+                        <span class="check-icon">✓</span>
+                        <span>Advanced search filters for precise results</span>
+                    </div>
+                    <div class="advantage-item">
+                        <span class="check-icon">✓</span>
+                        <span>Personalized job recommendations</span>
+                    </div>
+                    <div class="advantage-item">
+                        <span class="check-icon">✓</span>
+                        <span>One-click application process</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Key Features Section -->
+    <div class="row text-center mb-5 g-4">
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="feature-icon">🔎</div>
+                <h5>Smart Search</h5>
+                <p>Find jobs by skill, title, or location with our intelligent search algorithm that understands what you're looking for.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h5>Fast & Fresh</h5>
+                <p>Updated listings fetched live from external APIs to ensure you see the most current opportunities.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="feature-icon">💼</div>
+                <h5>Verified Listings</h5>
+                <p>Reliable job data with verified links to protect you from scams and ensure quality opportunities.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Job Listings Section -->
+    <h2 class="text-white text-center mb-4">Featured Opportunities</h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% if jobs %}
+            {% for job in jobs %}
+                <div class="col">
+                    <div class="job-card">
+                        <div class="job-details">
+                            <h5>{{ job.get('job_title', 'Job Title Not Available') }}</h5>
+                            <p><strong>Company:</strong> {{ job.get('display_company', 'Company Not Specified') }}</p>
+                            <p><strong>Location:</strong> {{ job.get('job_city', job.get('job_state', job.get('job_country', 'Location Not Specified'))) }}</p>
+                            {% if job.get('job_description') %}
+                                <p class="text-muted">{{ job.get('job_description')[:200] }}{% if job.get('job_description')|length > 200 %}...{% endif %}</p>
+                            {% endif %}
+                        </div>
+                        <div>
+                            {% if job.get('job_apply_link') %}
+                                <a href="{{ job.get('job_apply_link') }}" target="_blank" class="btn-primary">Apply Now</a>
+                            {% elif job.get('job_post_url') %}
+                                <a href="{{ job.get('job_post_url') }}" target="_blank" class="btn-primary">View Job Details</a>
+                            {% else %}
+                                <p class="text-danger">No application link available</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% elif query or area or category %}
+            <div class="col-12">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                {% else %}
+                    <div class="alert alert-warning">No jobs found. Try different search terms.</div>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</main>
+
+<footer class="py-4 mt-5">
+    <div class="page-container text-center">
+        <p class="text-muted mb-0">© 2025 JobSeeker. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+</body>
+</html>

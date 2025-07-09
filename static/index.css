@@ -1,0 +1,26 @@
+html,body{
+    width:100%;
+    height:100%;
+
+}
+body{
+    margin:0;
+    padding:0;
+    background-color: #cdb4db;
+}
+
+.btn a{
+    color:aliceblue;
+    text-decoration:none;
+}
+.btn a:hover{
+
+    color:black
+}
+
+.div1{
+    width:100px;
+}
+.i1{
+    width:250px;
+}

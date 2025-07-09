@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <style>
+      :root {
+        --primary-color: #6a1b9a;
+        --hover-color: #4a148c;
+      }
+      body {
+        background: linear-gradient(135deg, #cdb4db 0%, #ffafcc 100%);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      .signup-container {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+      }
+      .signup-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        padding: 2.5rem;
+        width: 100%;
+        max-width: 600px;
+        transition: transform 0.3s ease;
+      }
+      .signup-card:hover {
+        transform: translateY(-5px);
+      }
+      .form-control {
+        border-radius: 10px;
+        padding: 1rem;
+        border: 2px solid #eee;
+        transition: all 0.3s ease;
+      }
+      .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(106, 27, 154, 0.25);
+      }
+      .btn-primary {
+        background-color: var(--primary-color);
+        border: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 10px;
+        width: 100%;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+      .btn-primary:hover {
+        background-color: var(--hover-color);
+        transform: translateY(-2px);
+      }
+      .input-icon {
+        position: relative;
+      }
+      .input-icon i {
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999;
+        z-index: 2;
+      }
+      .input-icon input,
+      .input-icon select {
+        padding-left: 45px;
+        position: relative;
+        z-index: 1;
+      }
+      .form-row {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+      .form-group {
+        flex: 1;
+      }
+      .already-account {
+        text-align: center;
+        margin-top: 1.5rem;
+        color: #666;
+      }
+      .already-account a {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+      }
+      .already-account a:hover {
+        color: var(--hover-color);
+      }
+    </style>
+  </head>
+  <body>
+
+  {% include 'messages.html' with context%}
+
+    <div class="signup-container">
+      <div class="signup-card">
+        <h2 class="text-center mb-4">Create New Account 🚀</h2>
+        <p class="text-center text-muted mb-4">Join our community today!</p>
+
+        <form action="{{ url_for('routes.register') }}" method="POST" enctype="multipart/form-data">
+          <div class="form-row">
+            <div class="form-group input-icon">
+              <i class="fas fa-user"></i>
+              <input type="text" name="full_name" class="form-control" placeholder="Full Name" required />
+            </div>
+            <div class="form-group input-icon">
+              <i class="fas fa-calendar-day"></i>
+              <input type="date" name="dob" class="form-control" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group input-icon">
+              <i class="fas fa-university"></i>
+              <input type="text" name="university" class="form-control" placeholder="University Name" required />
+            </div>
+            <div class="form-group input-icon">
+              <select class="form-control" name="study_year" required>
+                <option value="">Current Study Year</option>
+                <option>1st Year</option>
+                <option>2nd Year</option>
+                <option>3rd Year</option>
+                <option>4th Year</option>
+                <option>Graduate</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group input-icon mb-3">
+            <i class="fas fa-envelope"></i>
+            <input type="email" name="email" class="form-control" placeholder="Email Address" required />
+          </div>
+
+          <div class="form-group input-icon mb-3">
+            <i class="fas fa-lock"></i>
+            <input type="password" name="password" class="form-control" placeholder="Create Password" required />
+          </div>
+
+          <div class="form-group mb-3">
+            <label class="form-label">Work Experience</label>
+            <textarea name="work_experience" class="form-control" rows="3" placeholder="Briefly describe your work experience..."></textarea>
+          </div>
+
+          <div class="form-group mb-4">
+            <label class="form-label">Upload Resume</label>
+            <input type="file" name="resume" class="form-control" accept=".pdf,.doc,.docx" />
+            <small class="form-text text-muted">PDF or Word documents only</small>
+          </div>
+
+          <button type="submit" class="btn btn-primary mb-3">Create Account</button>
+
+          <div class="already-account">
+            <p class="mb-0">
+              Already have an account?
+              <a href="{{ url_for('routes.login') }}">Login Here</a>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
